@@ -1,2 +1,3 @@
 # posting-parsing-service
-microservise for postin images from pixiv in VK groups
+Microservise for posting images from pixiv in VK groups
+
