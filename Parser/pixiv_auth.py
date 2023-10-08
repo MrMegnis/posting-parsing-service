@@ -50,6 +50,18 @@ def print_auth_token_response(response):
     print("refresh_token:", refresh_token)
     print("expires_in:", data.get("expires_in", 0))
 
+def return_auth_token_response(response):
+    data = response.json()
+
+    try:
+        access_token = data["access_token"]
+        refresh_token = data["refresh_token"]
+    except KeyError:
+        print("error:")
+        pprint(data)
+        exit(1)
+    return (access_token, refresh_token, data.get("expires_in", 0))
+
 
 def login():
     code_verifier, code_challenge = oauth_pkce(s256)
@@ -96,6 +108,7 @@ def refresh(refresh_token):
         headers={"User-Agent": USER_AGENT},
     )
     print_auth_token_response(response)
+    return return_auth_token_response(response)
 
 
 def main():
