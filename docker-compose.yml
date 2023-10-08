@@ -1,0 +1,27 @@
+version: "4"
+
+services:
+  postgres:
+    image: postgres:16.0
+    container_name: postgres_db_container
+    environment:
+      POSTGRES_DB: "aboba"
+      POSTGRES_USER: "andrew"
+      POSTGRES_PASSWORD: "sup3rh4rdp4ssw0rd"
+    volumes:
+      - .:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+  api:
+    container_name: api
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/app
+    expose:
+      - 3000
+    ports:
+      - "3000:3000"
+    command: >
+      /bin/sh -c 'python Api/main.py'
